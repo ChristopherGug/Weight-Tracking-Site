@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include("./components/head.ejs") %>
+
+<body>
+    <%- include("./components/nav.ejs") %>
+
+    <div class="container">
+        <h1>Enter Today's</h1>
+        <div class="form-container">
+            <form action="/track" method="POST" class="input-form">
+                <%  entries.reverse();
+                    entries.forEach(entry => { %>
+                    <label>
+                        <%= entry.createdAt.toString().slice(0, 15)%> 
+                        <% if (entry.createdAt === entries[entries.length - 1].createdAt) { %>
+                            <a class="delete" data-entry="<%= entry.id %>">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="12" width="10.5" viewBox="0 0 448 512">
+                                    <!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                    <path fill="#ffffff" d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"/>
+                                </svg>
+                            </a>
+                        <% } %>
+                    </label>
+                    <input type="text" class="previous-weight" readonly placeholder="<%= entry.weight %>">
+                <% }); %>
+                <label>Today</label>
+                <input type="number" step="0.01" id="weight" class="todays-weight" name="weight" placeholder="Enter Today's Weight" autofocus>
+                <button class="submitBtn" onclick="">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <%- include("./components/footer.ejs") %>
+
+    <script>
+        const submitBtn = document.querySelector(".submitBtn");
+        const weightInput = document.getElementById("weight");
+        const trashcan = document.querySelectorAll("a.delete");
+
+        submitBtn.addEventListener("click", (e) => {
+            if (weightInput.value === "") {
+                e.preventDefault();
+                weightInput.placeholder = "Please enter a weight";
+                weightInput.classList.add("error-placeholder");
+            }
+        });
+        
+        trashcan.forEach(element => {
+            element.addEventListener("click", event => {
+                const endpoint = `/track.html/${element.dataset.entry}`;
+
+                fetch(endpoint, {method: "DELETE"}).then(() => {
+                    location.reload();
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
