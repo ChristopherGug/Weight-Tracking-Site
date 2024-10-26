@@ -5,10 +5,11 @@ const Weight = require("../models/weight");
 const parentDir = path.join(__dirname, "..");
 
 const app = express();
+const port = process.env.PORT || 3000;
 
 const dbURI = "mongodb+srv://ChrisGug:ZSWshiT8DpvVJdsY@weights.mswfn.mongodb.net/?retryWrites=true&w=majority&appName=Weights";
 mongoose.connect(dbURI)
-.then(result => app.listen(3000))
+.then(result => app.listen(port))
 .catch(error => console.error(error));
 
 app.set("view engine", "ejs");
