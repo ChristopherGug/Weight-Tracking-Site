@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "prod": "node ./scripts/app.js",
     "start": "nodemon ./scripts/app.js"
   },
   "author": "Christopher Gugelmeier",
@@ -13,6 +14,7 @@
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "mongoose": "^8.6.1",
-    "nodemon": "^3.1.7"
+    "nodemon": "^3.1.7",
+    "wrangler": "^3.83.0"
   }
 }
