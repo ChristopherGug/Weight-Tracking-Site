@@ -9,7 +9,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 const dbURI = process.env.dbURI;
-console.log(dbURI)
+
 mongoose.connect(dbURI)
 .then(result => app.listen(port))
 .catch(error => console.error(error));
