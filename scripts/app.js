@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
@@ -7,7 +8,8 @@ const parentDir = path.join(__dirname, "..");
 const app = express();
 const port = process.env.PORT || 3000;
 
-const dbURI = "mongodb+srv://ChrisGug:ZSWshiT8DpvVJdsY@weights.mswfn.mongodb.net/?retryWrites=true&w=majority&appName=Weights";
+const dbURI = process.env.dbURI;
+console.log(dbURI)
 mongoose.connect(dbURI)
 .then(result => app.listen(port))
 .catch(error => console.error(error));
